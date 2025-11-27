@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_candi/screens/favorite_screen.dart';
+import 'package:wisata_candi/screens/home_screen.dart';
+import 'package:wisata_candi/screens/search_screen.dart';
+import 'package:wisata_candi/screens/profile_screen.dart';
+import 'package:wisata_candi/screens/signup_screen.dart';
+import 'package:wisata_candi/screens/signin_screen.dart';
+import 'package:wisata_candi/data/candi_data.dart';
+import 'package:wisata_candi/screens/detail_screen.dart';
+import 'widgets/profile_info_item.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -6,15 +17,39 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wisata Candi',
       debugShowCheckedModeBanner: false,
+      title: 'Wisata Candi',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.deepPurple),
+          titleTextStyle: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        colorScheme:
+        ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+          primary: Colors.deepPurple,
+          surface: Colors.deepPurple[50],
+        ),
+        useMaterial3: true,
       ),
-      home: const MainScreen(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/homescreen': (context) => const MainScreen(),
+      //   '/signin': (context) => const SignInScreen(),
+      //   '/signup': (context) => const SignUpScreen(),
+      // }
+      home : const MainScreen(),
+      routes: {
+        '/signin' : (context) => const SignInScreen(),
+        '/signup' : (context) => const SignUpScreen(),
+      },
     );
   }
 }
@@ -27,21 +62,27 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // TODO: 1. Deklarasi variabel
   int _currentIndex = 0;
-
-  final List<Widget> _children = const [
+  final List<Widget> _children = [
     HomeScreen(),
     SearchScreen(),
     FavoriteScreen(),
+    // SignUpScreen(),
+    // SignInScreen(),
     ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
-
+      //   TODO: 2. Buat properti body berupa widget yang ditampilkan
+      body: _children[
+      _currentIndex
+      ],
+      //   TODO: 3. Buat properti bottomNavigationBar dengan nilai Theme
       bottomNavigationBar: Theme(
+        //   TODO: 4. Buat data dan child dari Theme
         data: Theme.of(context).copyWith(
           canvasColor: Colors.deepPurple[50],
         ),
@@ -52,92 +93,35 @@ class _MainScreenState extends State<MainScreen> {
               _currentIndex = index;
             });
           },
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.deepPurple,
-          unselectedItemColor: Colors.deepPurple[200],
-          showUnselectedLabels: true,
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
+            BottomNavigationBarItem(icon:
+            Icon(Icons.home,
+                color: Colors.deepPurple
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "Search",
+                label: 'Home'
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: "Favorite",
+            BottomNavigationBarItem(icon:
+            Icon(Icons.search,
+                color: Colors.deepPurple
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile",
+                label: 'Search'
+            ),
+            BottomNavigationBarItem(icon:
+            Icon(Icons.favorite,
+                color: Colors.deepPurple
+            ),
+                label: 'Favorite'
+            ),
+            BottomNavigationBarItem(icon:
+            Icon(Icons.person,
+                color: Colors.deepPurple
+            ),
+                label: 'Profile'
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Home Screen",
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Search Screen",
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Favorite Screen",
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Profile Screen",
-          style: TextStyle(fontSize: 24),
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.deepPurple[100],
+          showUnselectedLabels: true,
         ),
       ),
     );
