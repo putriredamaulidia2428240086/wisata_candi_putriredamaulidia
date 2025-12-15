@@ -44,16 +44,16 @@ class _HomeScreenState extends State<HomeScreen>
         itemBuilder: (context, index) {
           final Candi candi = candiList[index];
           final Animation<double> animation =
-              Tween<double>(begin: 0.0, end: 1.0).animate(
-                CurvedAnimation(
-                  parent: _animationController,
-                  curve: Interval(
-                    (index / candiList.length),
-                    ((index + 1) / candiList.length),
-                    curve: Curves.easeOut,
-                  ),
-                ),
-              );
+          Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+              parent: _animationController,
+              curve: Interval(
+                (index / candiList.length),
+                ((index + 1) / candiList.length),
+                curve: Curves.easeOut,
+              ),
+            ),
+          );
 
           return FadeTransition(
             opacity: animation,
